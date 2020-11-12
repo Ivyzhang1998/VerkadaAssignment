@@ -29,13 +29,17 @@ class Camera:
         """
         Send the current logs to the server
         """
+        try:
     #    self.lock.acquire()
-        command = requests.get('http://127.0.0.1:5000/command')
-        if command.text == "send_logs": #Get the "send_logs" command in response
-            r = requests.post('http://127.0.0.1:5000/', data = self.shared_logs)
-            print(r)
-            #upload the current logs to the server
-        print(command.text)
+            command = requests.get('http://127.0.0.1:5000/command')
+            if command.text == "send_logs": #Get the "send_logs" command in response
+                r = requests.post('http://127.0.0.1:5000/', data = self.shared_logs)
+                print(r)
+                #upload the current logs to the server
+            print(command.text)
+        except requests.ConnectionError as e:
+            print(e)
+            print("Can't conect to the web server!!!")
     #    self.lock.release()
 
 if __name__ == "__main__":
