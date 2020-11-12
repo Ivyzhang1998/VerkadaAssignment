@@ -14,6 +14,9 @@ camera = Camera()
 
 @app.route('/' ,methods=['GET', 'POST'])
 def index():
+    """
+    home page where the users are able to send requests
+    """
     global camera
     if request.method == 'POST':
         camera.command_status = True
@@ -23,6 +26,9 @@ def index():
 
 @app.route('/command')
 def command():
+    """
+    camera sends request to check whether there is send_logs command
+    """
     global camera
     if camera.command_status == True:
        return "send_logs"
