@@ -3,8 +3,8 @@ A simple web service that allows the users to request log messages from a virtua
 
 - Installation requirements (see `requirements.txt`):
 
-1. Flask
-2. Flask-APScheduler
+1. Flask `pip install Flask`
+2. Flask-APScheduler `pip install Flask-APScheduler`
 
 - Run the web service
 
