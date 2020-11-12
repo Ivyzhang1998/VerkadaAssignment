@@ -7,6 +7,8 @@ Date: 11/11/2020
 from flask import Flask, render_template, request
 from flask_apscheduler import APScheduler
 from Camera import Camera
+import json
+import time
 app = Flask(__name__)
 camera = Camera()
 
@@ -15,16 +17,16 @@ def index():
     global camera
     if request.method == 'POST':
         camera.command_status = True
-        return "successfully requested!"
+        data = request.get_json() #retrive the log messages in json form
+        return "Successfully requested! "
     return render_template('index.html')
 
 @app.route('/command')
 def command():
     global camera
     if camera.command_status == True:
-      # camera.command_status = False
        return "send_logs"
-    return "don't send logs"
+    return "no command from the server"
 
 
 if __name__ == '__main__':
