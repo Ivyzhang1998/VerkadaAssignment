@@ -8,31 +8,26 @@ from flask import Flask, render_template, request
 from flask_apscheduler import APScheduler
 from Camera import Camera
 app = Flask(__name__)
-command_status = False
 camera = Camera()
 
 @app.route('/' ,methods=['GET', 'POST'])
 def index():
-    global command_status
+    global camera
     if request.method == 'POST':
-        command_status = True
+        camera.command_status = True
         return "successfully requested!"
     return render_template('index.html')
 
 @app.route('/command')
-def command(command_stat):
-    global command_status
-    if command_status == True:
-       command_status = False
-      # print(command_status)
+def command():
+    global camera
+    if camera.command_status == True:
+      # camera.command_status = False
        return "send_logs"
     return "don't send logs"
 
 
 if __name__ == '__main__':
-    #global command_status
-    print("test")
-    print(command_status)
     camera.generate_logs()
     scheduler = APScheduler()
     #Camera sends a request to the server every second

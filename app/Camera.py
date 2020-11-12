@@ -12,7 +12,7 @@ class Camera:
     def __init__(self):
         self.shared_logs = []
         self.lock = threading.Lock()
-        self.server_running = False
+        self.command_status = False
 
     def generate_logs(self):
         """
@@ -33,9 +33,11 @@ class Camera:
     #    self.lock.acquire()
             command = requests.get('http://127.0.0.1:5000/command')
             if command.text == "send_logs": #Get the "send_logs" command in response
+                self.command_status = True
                 r = requests.post('http://127.0.0.1:5000/', data = self.shared_logs)
                 print(r)
                 #upload the current logs to the server
+                self.command_status = False
             print(command.text)
         except requests.ConnectionError as e:
             print(e)
